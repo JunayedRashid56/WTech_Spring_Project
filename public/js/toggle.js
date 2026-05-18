@@ -6,7 +6,7 @@ buttons.forEach(button => {
 
         const id = this.dataset.id;
 
-        fetch('../../api/toggle.php', {
+        fetch('/WTech Project/api/toggle.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,6 +18,7 @@ buttons.forEach(button => {
 
             if (data.ok) {
                 this.innerText = data.is_available ? 'Active' : 'Inactive';
+                this.className = 'toggleBtn ' + (data.is_available ? 'badge-active' : 'badge-inactive');
             }
 
         });

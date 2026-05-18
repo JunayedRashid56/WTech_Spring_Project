@@ -6,7 +6,7 @@ addButtons.forEach(button => {
 
         const itemId = this.dataset.id;
 
-        fetch('../../api/cart/add.php', {
+        fetch('/WTech Project/api/cart/add.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -15,16 +15,17 @@ addButtons.forEach(button => {
         })
         .then(response => response.json())
         .then(data => {
-
             if (data.success) {
-
                 const cartCount = document.getElementById('cart-count');
+                if (cartCount) cartCount.innerText = data.cart_count;
 
-                if (cartCount) {
-                    cartCount.innerText = data.cart_count;
-                }
-
-                alert('Item Added To Cart');
+                const orig = this.textContent;
+                this.textContent = '✓ Added';
+                this.disabled = true;
+                setTimeout(() => {
+                    this.textContent = orig;
+                    this.disabled = false;
+                }, 1400);
             }
         });
     });
@@ -49,7 +50,7 @@ quantityButtons.forEach(button => {
             quantity--;
         }
 
-        fetch('../../api/cart/update.php', {
+        fetch('/WTech Project/api/cart/update.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -88,7 +89,7 @@ removeButtons.forEach(button => {
 
         const itemId = this.dataset.id;
 
-        fetch('../../api/cart/remove.php', {
+        fetch('/WTech Project/api/cart/remove.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
