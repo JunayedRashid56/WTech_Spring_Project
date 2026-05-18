@@ -73,11 +73,13 @@ class User
     }
     public function findByRememberToken($token)
     {
+        $hashedToken = hash('sha256', $token);
+
         $stmt = $this->pdo->prepare(
             "SELECT * FROM users WHERE remember_token=?"
         );
 
-        $stmt->execute([$token]);
+        $stmt->execute([$hashedToken]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

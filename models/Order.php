@@ -5,12 +5,14 @@ class Order
 {
     private $conn;
 
-    public function __construct()
+    public function __construct($pdo = null)
     {
-        // Bridges the gap between both versions. 
-        // If your database.php uses $pdo, change $conn to $pdo here.
-        global $conn;
-        $this->conn = $conn;
+        if ($pdo) {
+            $this->conn = $pdo;
+        } else {
+            global $conn;
+            $this->conn = $conn;
+        }
     }
 
     // --- CREATE ORDER METHODS (From Code 1) ---
@@ -128,7 +130,7 @@ class Order
 
     public function getOrderStatus($orderId, $userId)
     {
-        $sql = "SELECT status
+        $sql = "SELECT id, status, created_at, delivery_address, payment_method, total_amount
             FROM orders
             WHERE id = ?
             AND user_id = ?";
